@@ -18,14 +18,14 @@ app.use(express.json()); // allows us to accept JSON data in the req.body
 app.use("/api/products", productRoutes);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-app.get("*", (req, res) => {
-  const indexPath = path.join(__dirname, "../frontend/dist/index.html");
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.json({ message: "Backend API - Frontend not built" });
-  }
+// Basic route
+app.get("/", (req, res) => {
+  res.json({
+    message: "Backend API is running!",
+    endpoints: {
+      products: "/api/products",
+    },
+  });
 });
 
 // if (process.env.NODE_ENV === "production") {
